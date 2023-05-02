@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
-const dbData = require("./db/db.json")
+const dbData = require("./db/db.json");
+const { writeFile } = require('fs');
+const dbArray = []
 
 const PORT = process.env.PORT || 3001;
 
@@ -26,11 +28,22 @@ app.get('/api/notes', (req, res) => {
 });
 // Post request for notes
 app.post('/api/notes', (req, res) => {
+  
+  const noteData = req.body
 
+  dbArray.push(noteData)
+
+  const pushedNote = JSON.stringify(dbArray)
+
+  writeFile(path.join(__dirname, './db/db.json'), pushedNote , (err) =>{
+    if (err){
+      console.log(err)
+    }
+  })
   //pull out data from req.body
   //push to the db array (importing from db)
   // write to file (db.json)
-  res.status(200).json();
+  res.status(200).json(dbData);
 });
 // DELETE request for notes
 app.delete('/api/notes', (req, res) => {
