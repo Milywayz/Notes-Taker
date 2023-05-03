@@ -49,6 +49,7 @@ app.post('/api/notes', (req, res) => {
 app.delete('/api/notes', (req, res) => {
   res.json(dbData)
   // res.status(200).json(dbData);
+  // reviews = reviews.filer(review => review.review_id != req.params.id)
 });
 
 app.listen(PORT, () =>
