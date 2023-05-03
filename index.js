@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const dbData = require("./db/db.json");
 const { writeFile } = require('fs');
+const uuid = require('./public/assets/js/uuid')
 
 const PORT = process.env.PORT || 3001;
 
@@ -30,14 +31,10 @@ app.post('/api/notes', (req, res) => {
 
   
   const noteData = req.body 
-
-  const noteDataId = Math.random().toString(36);
-
-// Add the ID to the noteData object
+  const noteDataId = uuid()
   noteData.id = noteDataId;
 
   dbData.push(noteData)
-
   const pushedNote = JSON.stringify(dbData)
 
   writeFile(path.join(__dirname, './db/db.json'), pushedNote , (err) =>{
@@ -51,9 +48,9 @@ app.post('/api/notes', (req, res) => {
   res.status(200).json(dbData);
 });
 // DELETE request for notes
-app.delete('/api/notes', (req, res) => {
-  res.json(dbData)
-  // res.status(200).json(dbData);
+app.delete('/api/notes/:id', (req, res) => {
+  
+  
   reviews = reviews.filer(review => review.review_id != req.params.id)
 });
 
