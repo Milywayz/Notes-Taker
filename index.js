@@ -1,9 +1,11 @@
+// Requiring info
 const express = require('express');
 const path = require('path');
 const dbData = require("./db/db.json");
 const { writeFile } = require('fs');
 const uuid = require('./public/assets/js/uuid')
 
+// Server Uses and needed code 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -13,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
+// Path ways for html
 app.get('/', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/index.html'))
 );
@@ -20,16 +23,16 @@ app.get('/', (req, res) =>
 app.get('/notes', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
+
 // GET request for notes
 app.get('/api/notes', (req, res) => {
   
   res.json(dbData)
-  // res.status(200).json(dbData);
 });
+
 // Post request for notes
 app.post('/api/notes', (req, res) => {
 
-  
   const noteData = req.body 
   const noteDataId = uuid()
   noteData.id = noteDataId;
@@ -45,12 +48,13 @@ app.post('/api/notes', (req, res) => {
 
   res.status(200).json(dbData);
 });
+
 // DELETE request for notes
 app.delete('/api/notes/:id', (req, res) => {
-  
-    const id = parseInt(req.params)
-    const dbDataIndex = dbData.findIndex(p => p.id == id)
 
+    const id = (req.params.id)
+    const dbDataIndex = dbData.findIndex(dbData => dbData.id == id)
+    
     dbData.splice(dbDataIndex, 1);
     const deleteData = JSON.stringify(dbData)
 
@@ -63,6 +67,7 @@ app.delete('/api/notes/:id', (req, res) => {
     return res.send();
 });
 
+// Listens for action for the server 
 app.listen(PORT, () =>
 console.log(`App listening at http://localhost:${PORT} 🚀`)
 );

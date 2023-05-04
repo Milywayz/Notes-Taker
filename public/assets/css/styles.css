@@ -1,14 +1,15 @@
+/* General CSS */
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
-
+/* Hiding displays */
 .save-note {
   display: none;
 }
-
+/* Body CSS */
 .icons i {
   margin-left: 15px;
   margin-right: 15px;
