@@ -42,16 +42,25 @@ app.post('/api/notes', (req, res) => {
       console.log(err)
     }
   })
-  //pull out data from req.body
-  //push to the db array (importing from db)
-  // write to file (db.json)
+
   res.status(200).json(dbData);
 });
 // DELETE request for notes
 app.delete('/api/notes/:id', (req, res) => {
   
-  
-  reviews = reviews.filer(review => review.review_id != req.params.id)
+    const id = parseInt(req.params)
+    const dbDataIndex = dbData.findIndex(p => p.id == id)
+
+    dbData.splice(dbDataIndex, 1);
+    const deleteData = JSON.stringify(dbData)
+
+    writeFile(path.join(__dirname, './db/db.json'), deleteData , (err) =>{
+      if (err){
+        console.log(err)
+      }
+    })
+    
+    return res.send();
 });
 
 app.listen(PORT, () =>
