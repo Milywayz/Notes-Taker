@@ -18,7 +18,7 @@ Express and Uuid is installed into this project for functioning
 ## Usage
 
 ![alt text](/public/assets/Server-Image.png)
-[Click here to see Deployed Application](https://radiant-plateau-99287.herokuapp.com/notes)
+[Click here to see Deployed Application](https://radiant-plateau-99287.herokuapp.com)
 
 
 ## License
